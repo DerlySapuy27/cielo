@@ -20,13 +20,14 @@
             background: linear-gradient(135deg, #17121c, #2b1725);
             font-family: 'Segoe UI', Arial, sans-serif;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
+            padding: 20px 0;
         }
 
         /* === corazones flotantes === */
         .corazon-flotante {
-            position: absolute;
+            position: fixed;
             font-size: 18px;
             animation: flotar 7s linear infinite;
             opacity: 0.5;
@@ -119,8 +120,9 @@
             border-color: rgba(255, 107, 129, 0.5);
         }
 
+        /* ⬇️ AQUÍ ESTÁ EL ARREGLO PRINCIPAL ⬇️ */
         .paso.activo .texto-oculto {
-            max-height: 300px;
+            max-height: 1000px;   /* antes 300px, ahora cabe cualquier texto */
             opacity: 1;
             margin-top: 10px;
         }
@@ -209,19 +211,20 @@
             transform: scale(0.97);
         }
 
+        /* ⬇️ TAMBIÉN AJUSTADO PARA TEXTOS LARGOS ⬇️ */
         #mensajeFinal {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: max-height 0.8s ease, opacity 0.6s ease, margin-top 0.5s ease;
+            transition: max-height 1s ease, opacity 0.6s ease, margin-top 0.5s ease;
             margin-top: 0;
             color: #ffdce4;
             font-size: 17px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         #mensajeFinal.visible {
-            max-height: 300px;
+            max-height: 1000px;   /* antes 300px */
             opacity: 1;
             margin-top: 22px;
         }
@@ -273,7 +276,7 @@
         <!-- PASO 1 -->
         <div class="paso" onclick="togglePaso(this)">
             <div class="titulo-paso">
-                <span>💭</span>😟🥺
+                <span>💭</span> 😟🥺
                 <span class="indicador">▼</span>
             </div>
             <div class="texto-oculto">
@@ -286,7 +289,7 @@
         <!-- PASO 2 -->
         <div class="paso" onclick="togglePaso(this)">
             <div class="titulo-paso">
-                <span>🌟</span>Recordatorio
+                <span>🌟</span> Recordatorio
                 <span class="indicador">▼</span>
             </div>
             <div class="texto-oculto">
@@ -322,23 +325,24 @@
         <div class="corazon-cafe" title="Un corazón cafecito para ti">🤎</div>
 
         <div class="firma">
-            Con cariño, para ti. 
+            Con cariño, para ti.
         </div>
 
         <button onclick="mostrarMensajeFinal()">
             CLICK ❤️
         </button>
-        
 
         <div id="mensajeFinal">
             Puedes apoyarte en mí.
             <br><br>
             Hoy, mañana y cuando lo necesites.
             🤎❤️
-
+            <br><br>
             Posdata: no olvides comer bien.
-            Te quiero
-            Tampoco olvides el tintico que tanto amas.
+            <br>
+            Te quiero.
+            <br>
+            Tampoco olvides el tintico que tanto amas. ☕
         </div>
 
         <button class="reset" onclick="reiniciar()">
@@ -350,11 +354,9 @@
     <script>
         // Abre/cierra cada paso individualmente
         function togglePaso(el) {
-            // Cierra los demás pasos (opcional, para que solo uno esté abierto)
             document.querySelectorAll('.paso').forEach(p => {
                 if (p !== el) p.classList.remove('activo');
             });
-            // Alterna el paso clickeado
             el.classList.toggle('activo');
         }
 
@@ -370,9 +372,8 @@
             document.getElementById('mensajeFinal').classList.remove('visible');
         }
 
-        // (Extra) Efecto de corazones al hacer click en cualquier parte
+        // Efecto de corazones al hacer click
         document.addEventListener('click', function(e) {
-            // Evita que se dispare sobre botones o pasos (para no interferir)
             if (e.target.closest('.paso') || e.target.closest('button')) return;
 
             const corazon = document.createElement('div');
