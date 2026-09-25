@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti 🤎</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #17121c, #2b1725);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* === corazones flotantes === */
+        .corazon-flotante {
+            position: absolute;
+            font-size: 18px;
+            animation: flotar 7s linear infinite;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .corazon-flotante:nth-child(1) { left: 8%;  animation-delay: 0s;   color: #ff6b81; }
+        .corazon-flotante:nth-child(2) { left: 28%; animation-delay: 2.5s; color: #d2a679; }
+        .corazon-flotante:nth-child(3) { left: 52%; animation-delay: 1s;   color: #ff6b81; }
+        .corazon-flotante:nth-child(4) { left: 75%; animation-delay: 3.5s; color: #d2a679; }
+        .corazon-flotante:nth-child(5) { left: 90%; animation-delay: 5s;   color: #ff6b81; }
+        .corazon-flotante:nth-child(6) { left: 15%; animation-delay: 4s;   color: #e8c8a0; }
+        .corazon-flotante:nth-child(7) { left: 65%; animation-delay: 6s;   color: #d2a679; }
+
+        @keyframes flotar {
+            0%   { bottom: -50px; transform: translateX(0) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.6; }
+            90%  { opacity: 0.6; }
+            100% { bottom: 110%; transform: translateX(40px) rotate(20deg); opacity: 0; }
+        }
+
+        /* === contenedor principal === */
+        .contenedor {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .corazon-grande {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: latido 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.12); }
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        /* === pasos interactivos === */
+        .paso {
+            cursor: pointer;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            transition: all 0.35s ease;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: aparecer 0.6s forwards;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paso:nth-child(1) { animation-delay: 0.2s; }
+        .paso:nth-child(2) { animation-delay: 0.4s; }
+        .paso:nth-child(3) { animation-delay: 0.6s; }
+        .paso:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes aparecer {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .paso:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 182, 197, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .paso.activo {
+            background: rgba(255, 107, 129, 0.15);
+            border-color: rgba(255, 107, 129, 0.5);
+        }
+
+        .paso.activo .texto-oculto {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 10px;
+        }
+
+        .paso .texto-oculto {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, opacity 0.5s ease, margin-top 0.4s ease;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #f0dfe5;
+            padding: 0 5px;
+        }
+
+        .paso .titulo-paso {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffb6c5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .paso .indicador {
+            font-size: 12px;
+            color: #ff8fa3;
+            transition: transform 0.35s ease;
+            display: inline-block;
+        }
+
+        .paso.activo .indicador {
+            transform: rotate(180deg);
+        }
+
+        /* === corazón café === */
+        .corazon-cafe {
+            font-size: 28px;
+            margin: 20px auto 5px;
+            display: block;
+            color: #c69c6d;
+            text-shadow: 0 0 12px rgba(198, 156, 109, 0.5);
+            animation: latidoCafe 2s infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .corazon-cafe:hover {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+
+        @keyframes latidoCafe {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.1); }
+        }
+
+        .firma {
+            margin-top: 18px;
+            font-size: 16px;
+            color: #ffb6c5;
+            font-style: italic;
+        }
+
+        /* === botón === */
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #ff5c7a, #ff8fa3);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 92, 122, 0.3);
+        }
+
+        button:hover {
+            transform: scale(1.06);
+            box-shadow: 0 8px 22px rgba(255, 92, 122, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        #mensajeFinal {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease, opacity 0.6s ease, margin-top 0.5s ease;
+            margin-top: 0;
+            color: #ffdce4;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        #mensajeFinal.visible {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 22px;
+        }
+
+        /* === botón de reset === */
+        .reset {
+            margin-top: 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            padding: 8px 20px;
+            box-shadow: none;
+        }
+
+        .reset:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+            transform: none;
+            color: white;
+        }
+
+        /* === responsive === */
+        @media (max-width: 500px) {
+            .contenedor { padding: 30px 20px; }
+            h1 { font-size: 26px; }
+            .corazon-grande { font-size: 50px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- corazones flotantes de fondo -->
+    <div class="corazon-flotante">♥</div>
+    <div class="corazon-flotante">♥</div>
+    <div class="corazon-flotante">♥</div>
+    <div class="corazon-flotante">♥</div>
+    <div class="corazon-flotante">♥</div>
+    <div class="corazon-flotante">♥</div>
+    <div class="corazon-flotante">♥</div>
+
+    <div class="contenedor">
+
+        <div class="corazon-grande">🤎</div>
+
+        <h1>Para ti</h1>
+
+        <!-- PASO 1 -->
+        <div class="paso" onclick="togglePaso(this)">
+            <div class="titulo-paso">
+                <span>💭</span>😟🥺
+                <span class="indicador">▼</span>
+            </div>
+            <div class="texto-oculto">
+                Sé que estás pasando por un momento difícil
+                y quizá no tenga las palabras exactas para
+                hacer que todo esté bien.
+            </div>
+        </div>
+
+        <!-- PASO 2 -->
+        <div class="paso" onclick="togglePaso(this)">
+            <div class="titulo-paso">
+                <span>🌟</span>Recordatorio
+                <span class="indicador">▼</span>
+            </div>
+            <div class="texto-oculto">
+                <strong>No tienes que pasar por esto sola.</strong>
+            </div>
+        </div>
+
+        <!-- PASO 3 -->
+        <div class="paso" onclick="togglePaso(this)">
+            <div class="titulo-paso">
+                <span>🫂</span> Mi promesa
+                <span class="indicador">▼</span>
+            </div>
+            <div class="texto-oculto">
+                Estoy aquí para escucharte, acompañarte
+                y quedarme a tu lado, incluso en esos días
+                en los que todo parece demasiado.
+            </div>
+        </div>
+
+        <!-- PASO 4 -->
+        <div class="paso" onclick="togglePaso(this)">
+            <div class="titulo-paso">
+                <span>💌</span> Mi cielo
+                <span class="indicador">▼</span>
+            </div>
+            <div class="texto-oculto">
+                Te quiero mucho con bastante. 🤎
+            </div>
+        </div>
+
+        <!-- corazón café clarito -->
+        <div class="corazon-cafe" title="Un corazón cafecito para ti">🤎</div>
+
+        <div class="firma">
+            Con cariño, para ti. 
+        </div>
+
+        <button onclick="mostrarMensajeFinal()">
+            CLICK ❤️
+        </button>
+        
+
+        <div id="mensajeFinal">
+            Puedes apoyarte en mí.
+            <br><br>
+            Hoy, mañana y cuando lo necesites.
+            🤎❤️
+
+            Posdata: no olvides comer bien.
+            Te quiero
+            Tampoco olvides el tintico que tanto amas.
+        </div>
+
+        <button class="reset" onclick="reiniciar()">
+            Reiniciar
+        </button>
+
+    </div>
+
+    <script>
+        // Abre/cierra cada paso individualmente
+        function togglePaso(el) {
+            // Cierra los demás pasos (opcional, para que solo uno esté abierto)
+            document.querySelectorAll('.paso').forEach(p => {
+                if (p !== el) p.classList.remove('activo');
+            });
+            // Alterna el paso clickeado
+            el.classList.toggle('activo');
+        }
+
+        // Muestra u oculta el mensaje final con animación
+        function mostrarMensajeFinal() {
+            const msg = document.getElementById('mensajeFinal');
+            msg.classList.toggle('visible');
+        }
+
+        // Reinicia todo
+        function reiniciar() {
+            document.querySelectorAll('.paso').forEach(p => p.classList.remove('activo'));
+            document.getElementById('mensajeFinal').classList.remove('visible');
+        }
+
+        // (Extra) Efecto de corazones al hacer click en cualquier parte
+        document.addEventListener('click', function(e) {
+            // Evita que se dispare sobre botones o pasos (para no interferir)
+            if (e.target.closest('.paso') || e.target.closest('button')) return;
+
+            const corazon = document.createElement('div');
+            corazon.textContent = Math.random() > 0.5 ? '❤️' : '🤎';
+            corazon.style.position = 'fixed';
+            corazon.style.left = e.clientX + 'px';
+            corazon.style.top = e.clientY + 'px';
+            corazon.style.fontSize = '22px';
+            corazon.style.pointerEvents = 'none';
+            corazon.style.zIndex = '999';
+            corazon.style.transition = 'all 1s ease-out';
+            corazon.style.opacity = '1';
+            document.body.appendChild(corazon);
+
+            requestAnimationFrame(() => {
+                corazon.style.transform = `translate(${(Math.random() - 0.5) * 120}px, -${80 + Math.random() * 80}px) scale(0.3) rotate(${(Math.random() - 0.5) * 60}deg)`;
+                corazon.style.opacity = '0';
+            });
+
+            setTimeout(() => corazon.remove(), 1000);
+        });
+    </script>
+
+</body>
+</html>
